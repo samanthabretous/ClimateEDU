@@ -15,35 +15,35 @@ import {
 } from 'react-native';
 
 import RandManager from './RandManager.js';
+import UserProfile from './userProfile.ios.js'
 
 
-const NUM_WALLPAPERS = 5;
+const randomUser = 1;
 
 class ClimateEdu extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      wallsJSON: [],
-      isLoading: true
+      userData: null,
+      isLoading: true, 
+      uiView: "login",
+      isLogin: false,
+      enviromentLevel: 10
     };
   }
 
 
   fetchWallsJSON() {
-    var url = "https://api.spotify.com/v1/search?query=beyonce&offset=0&limit=20&type=album";
+    var url = "https://randomuser.me/api/";
     fetch(url)
       .then( response => response.json() )
       .then( jsonData => {
-        var randomIds = RandManager.uniqueRandomNumbers(NUM_WALLPAPERS, 0, jsonData.albums.items.length);
-        var walls = [];
-        randomIds.forEach(randomId => {
-          walls.push(jsonData.albums.items[randomId]);
-        });
+        console.log("userData",jsonData)
 
         this.setState({
           isLoading: false,
-          wallsJSON: [].concat(walls)
+          userData: jsonData
         });
       })
   }
@@ -68,31 +68,28 @@ class ClimateEdu extends Component {
   }
 
   renderResults() {
-    var {wallsJSON, isLoading} = this.state;
+    var {userData, isLoading} = this.state;
     if( !isLoading ) {
-      return (
-        
-     <View>
-          {wallsJSON.map((wallpaper, index) => {
-            return(
-              <Image
-                style={{width: 50, height: 50}}
-                source={{uri:wallpaper.images[0].url}}
-              ></Image>
+      return (   
+        <View>
+          <View style={styles.header}>
+            <Image
+              style={styles.profileImage}
+              source={{uri:this.state.userData.results[0].picture.large}}
+            ></Image>
 
-            );
-          })}  
-     </View>
+          </View>
+        </View>
       );
     }
   }
 
   render() {
-    console.log(this.state.wallsJSON)
-    console.log(this.state)
+    console.log("state", this.state)
     var {isLoading} = this.state;
-    if(isLoading)
+    if(isLoading){
       return this.renderLoadingMessage();
+    }
     else
       return this.renderResults();
   }
@@ -105,6 +102,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000'
+  }, 
+  header: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightblue',
+    height: 200
+  }, 
+  profileImage: {
+    width: 100, 
+    height: 100, 
+    borderRadius: 50
   }
 });
 
