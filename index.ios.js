@@ -33,7 +33,8 @@ class ClimateEdu extends Component {
       isLoading: true, 
       uiView: "loginProfile",
       isLogin: false,
-      enviromentLevel: 10
+      enviromentLevel: 10,
+      ven: 5,
     };
   }
 
@@ -120,15 +121,52 @@ const styles = StyleSheet.create({
   }, 
   header: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'lightblue',
-    height: 200
+    backgroundColor: '#1A93C0',
+    height: 250,
+    paddingTop: 60,
   }, 
+  header_font: {
+    paddingTop: 10,
+    fontSize: 30,
+    color: "white"
+  },
+  underHeader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    flexDirection: 'row',
+    height: 80,
+  },
+  underHeader_button1: {
+    flex: 1,
+    backgroundColor: "#3DBB62",
+    textAlign: 'center',
+    fontSize: 40,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    paddingLeft: 70,
+    paddingBottom: 0,
+    paddingRight: 70,
+    color: 'white'
+  },
+  underHeader_button2: {
+    flex: .5,
+    backgroundColor: "#F2C400",
+    textAlign: 'center',
+    fontSize: 40,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    paddingLeft: 50,
+    paddingBottom: 0,
+    paddingRight: 50,
+    color:'white'
+  },
   profileImage: {
-    width: 100, 
-    height: 100, 
+    width: 125, 
+    height: 125, 
     borderRadius: 50
   }, 
   login_screen: {
