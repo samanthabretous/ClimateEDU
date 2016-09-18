@@ -13,7 +13,6 @@ import {
   
 import MainComponent from './index.ios.js';
 import Button from 'react-native-button';
-console.log(MainComponent.state)
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -24,7 +23,6 @@ class LoginScreen extends Component {
       text: "",
       password: '',
       keyboardSpace: 0
-
     };
   }
 
@@ -41,7 +39,6 @@ class LoginScreen extends Component {
   }
 
   render () {
-    console.log(this.state.keyboardSpace)
     return (
       <View style={this.props.styles.login_screen}>
         <View>
@@ -65,7 +62,7 @@ class LoginScreen extends Component {
             <Button
               style={this.props.styles.button1}
               styleDisabled={{color: 'red'}}
-              onPress={() => this._handlePress()}>
+              onPress={() => this.props._handlePress("loginScreen")}>
               Login
             </Button>
             <Button

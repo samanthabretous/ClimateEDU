@@ -18,7 +18,8 @@ import {
 import RandManager from './RandManager.js';
 import UserProfile from './userProfile.ios.js'
 import LoginScreen from './loginView.ios.js'
-
+import Landing from './landing.ios.js'
+console.log(Landing)
 
 
 const randomUser = 1;
@@ -28,20 +29,19 @@ class ClimateEdu extends Component {
     super(props);
 
     this.state = {
-      uiView: "loginView",
+      userData: null,
+      isLoading: true, 
+      uiView: "loginProfile",
       isLogin: false,
       enviromentLevel: 10
     };
   }
-
 
   fetchWallsJSON() {
     var url = "https://randomuser.me/api/";
     fetch(url)
       .then( response => response.json() )
       .then( jsonData => {
-        console.log("userData",jsonData)
-
         this.setState({
           isLoading: false,
           userData: jsonData
@@ -54,7 +54,6 @@ class ClimateEdu extends Component {
   }
   renderLoadingMessage() {
     return (
-      
       <View style={styles.loadingContainer}>
         <ActivityIndicator
           animating={true}
@@ -62,30 +61,40 @@ class ClimateEdu extends Component {
           size={'large'} 
           style={{margin: 15}}
         ></ActivityIndicator>
-          <Text style={{color: '#fff'}}>Contacting Unsplash</Text>
-       
+          <Text style={{color: '#fff'}}>Connecting to Climate Edu</Text>
       </View>
     );
   }
 
+  _handlePress(screen){
+    
+    if (screen === "play" ){
+      this.setState({uiView: "play"})
+    } else if (screen === "landingProfile") {
+      this.setState({uiView: "userProfile"})
+    } else if (screen === "loginScreen"){
+      this.setState({uiView: "landingProfile"})
+    }
+
+  }
+
   renderResults() {
     var {userData, isLoading} = this.state;
-    if( !isLoading && this.state.uiView ==="userView") {
+    if( !isLoading && this.state.uiView ==="userProfile") {
       return (   
-        <View>
-          <View style={styles.header}>
-            <Image
-              style={styles.profileImage}
-              source={{uri:this.state.userData.results[0].picture.large}}
-            ></Image>
+        <UserProfile 
+          styles={styles} 
+          userData={this.state.userData}
+        />
 
-          </View>
-        </View>
       );
-    } else if (!isLoading && this.state.uiView ==="loginView"){
-      console.log(<LoginScreen />)
+    } else if (!isLoading && this.state.uiView ==="loginProfile"){
       return(
-        <LoginScreen styles={styles}/>
+        <LoginScreen styles={styles} _handlePress={this._handlePress.bind(this)}/>
+      )
+    } else if (!isLoading && this.state.uiView ==="landingProfile") {
+      return(
+        <Landing styles={styles} _handlePress={this._handlePress.bind(this)}/>
       )
     }
   }
@@ -128,7 +137,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#934EA6",
-    textAlign: 'center'
   }, 
   logo: {
     fontSize: 50,
@@ -172,6 +180,38 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "black"
+  },
+  landing:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  landing_button11: {
+    flex: .5,
+    alignItems: 'stretch',
+    backgroundColor: "#3DBB62",
+    justifyContent: 'center'
+  },
+  landing_button22:{
+    flex: .5,
+    alignItems: 'stretch',
+    backgroundColor: "#F2C400",
+    justifyContent: 'center'
+  },
+  landing_button1: {
+    backgroundColor: "#3DBB62",
+    color: 'white',
+    padding: 10,
+    textAlign: 'center',
+    fontSize: 75
+  },
+  landing_button2: {
+    flex: .25,
+    backgroundColor: "#F2C400",
+    color: 'white',
+    padding: 10,
+    textAlign: 'center',
+    fontSize: 75,
   }
 });
 
