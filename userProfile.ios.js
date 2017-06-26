@@ -60,7 +60,7 @@ class UserProfile extends Component {
           <View style={{flexDirection: 'row'}}>
             <Text style={{fontSize: 30}}>Cliamte: </Text>
             <Button
-              style={{height: 30, width: 200, backgroundColor: "#934EA6", color: "#934EA6"}}
+              style={{height: 30, width: 50, backgroundColor: "#934EA6", color: "#934EA6"}}
               onPress={() => this.props._handlePress("climateInfo")}
             >Cliamte
             </Button>
